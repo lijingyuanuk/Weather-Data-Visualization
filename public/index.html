@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta content="IE=edge" http-equiv="X-UA-Compatible">
+	<meta content="width=device-width, initial-scale=1.0,maximum-scale=1" name="viewport">
+	<title>Weather Forecast</title><!-- Loading third party fonts -->
+	<link href="main.css" rel="stylesheet" type="text/css"><!-- <link href="fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <!== Loading main css file -->
+	<link href="style.css" rel="stylesheet">
+	<link href="style2.css" rel="stylesheet">
+</head>
+<body>
+	<div class="site-content">
+	
+		<div class="site-header">
+			<div class="container">
+				<a class="branding" href="index.html"><img alt="" class="logo" src="images/logo.png">
+				<div class="logo-type">
+					<h1 class="site-title">Current Weather & Forecasts</h1><small class="site-description"></small>
+				</div></a>
+				<div class="main-navigation">
+					<button class="menu-toggle" type="button"><i class="fa fa-bars"></i></button>
+					<ul class="menu">
+						<li class="menu-item current-menu-item">
+							<a href="index.html">Home</a>
+						</li>
+						<li class="menu-item favourites-btn">
+							<a href="#section-title3">Favourites</a>
+						</li>
+						<li class="menu-item historic-btn">
+							<a href="#section-title2">Historic Data</a>
+						</li>
+					</ul><!-- .menu -->
+				</div><!-- .main-navigation -->
+				<div class="mobile-navigation"></div>
+			</div>
+		</div>
+		
+		
+		<div id="popup-overlay">
+			<div id="popup">
+				<h3 class="popup-title">Title</h3>
+				<div id="inner-popup"></div><button id="close-popup">close</button>
+			</div>
+		</div>
+		
+		
+		<div class="hero" data-bg-image="images/back.jpg">
+			<div class="container">
+				<form action="#" class="find-location">
+					<input class="search-location" placeholder="Enter a location..." type="text"> <input class="search-weather" type="submit" value="Find">
+				</form>
+			</div>
+		</div>
+		
+		<div class="forecast-table">
+			<div class="container">
+				<div class="forecast-container" style="display:none">
+					<div class="today forecast">
+						<div class="forecast-header">
+							<div class="day"></div>
+							<div class="date">
+								&gt;Click on a day to see more details
+							</div>
+						</div><!-- .forecast-header -->
+						<div class="forecast-content">
+							<div class="location"></div>
+							<div class="degree">
+								<div class="num">
+									<sup>o</sup>C
+								</div>
+								<div class="forecast-icon"></div>
+								<div class="weather-description"></div>
+								</div><span><img alt="" src="images/icon-umberella.png"></span><span class="rain"></span> <span><img alt="" src="images/icon-wind.png"></span><span class="wind-speed"></span> <span><img alt="" src="images/icon-compass.png"></span><span class="wind-deg"></span><br>
+							<br>
+							<p class="add-favs-btn">+ Add to favourites</p>
+						</div>
+					</div>
+				</div><!-- forecasts start -->
+				<div class="forecast-next-table">
+					<!-- forecasts end -->
+				</div>
+			</div>
+		</div><!-- table for a specific day forecast -->
+		<div class="container f-weather-div" style="display:none">
+			<h2 class='day-weather-f'>Weather for</h2>
+			<table class="table table-hover f-weather-table">
+				<thead>
+					<tr class='f-times'>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class='f-min'>
+						<td>Min Temp</td>
+					</tr>
+					<tr class='f-max'>
+						<td>Max Temp</td>
+					</tr>
+					<tr class='f-wind-deg'>
+						<td>windDeg</td>
+					</tr>
+					<tr class='f-wind-speed'>
+						<td>windSpeed</td>
+					</tr>
+					<tr class='f-weather-description'>
+						<td>description</td>
+					</tr>
+					<tr class='f-cloudiness'>
+						<td>cloudiness</td>
+					</tr>
+					<tr class='f-pressure'>
+						<td>pressure</td>
+					</tr>
+					<tr class='f-humidity'>
+						<td>humidity</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<main class="main-content" style="display:none">
+			<div>
+				<div class="fullwidth-block">
+					<div class="container">
+						<div class="row" style="text-align:center;">
+							<div class="live-camera">
+								<div id="buttons">
+									<h1>Weather Forecast Graphs</h1><button class="d3-button" onclick="TempCloud(globalForecastData)">Temperature & Cloudiness</button> <button class="d3-button" onclick="PressureHumid(globalForecastData)">Pressure & Humidity</button> <button class="d3-button" onclick="wind(globalForecastData)">Wind Speed</button>
+								</div><br>
+								<br>
+								<svg height="600px" id="chart" width="1000px"></svg>
+								<div id="wind-rose-graph" style="margin: 50px;"></div>
+							</div>
+							<div id="buttons2">
+								<h1>Maps</h1><button class="d3-button" onclick="initMap(globalCurrentData)">Basic Map</button> <button class="d3-button" onclick="multiCitiesMap(globalMapData)">UK Cities</button> <button class="d3-button" onclick="earthquakeMap(globalCurrentData)">Earthquake Map</button>
+							</div><br>
+							<br>
+							<div id="map">
+								<h1 id="section-title3"></h1>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main><!-- .main-content -->
+		<footer class="site-footer">
+			<div class="container">
+				<div class="row"></div>
+			</div>
+		</footer><!-- .site-footer -->
+	</div>
+	<script src="js/libraries/jquery-1.11.1.min.js">
+	</script> 
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js">
+	</script> 
+	<script src="https://cdn.plot.ly/plotly-latest.min.js">
+	</script> 
+	<script src="js/plugins.js">
+	</script> 
+	<script src="js/gmap.js">
+	</script> <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+	 <!-- Include all compiled plugins (below), or include individual files as needed -->
+	 
+	<script src="js/api/database-get.js">
+	</script> 
+	<script src="js/api/database-send.js">
+	</script> 
+	<script src="js/api/filter.js">
+	</script> 
+	<script src="js/d3graphs/windRoseGraph.js">
+	</script> 
+	<script src="js/api/localStorage.js">
+	</script> 
+	<script src="js/api/historicData.js">
+	</script> 
+	<script src="js/d3graphs/graphs.js">
+	</script> 
+	<script src="js/maps/googleMap.js">
+	</script> 
+	<script src="js/maps/earthquakeMap.js">
+	</script> 
+	<script src="js/maps/multiCitiesMap.js">
+	</script> 
+	<script src="js/api/render.js">
+	</script> 
+	<script src="js/api/sort-forecast.js">
+	</script> 
+	<script src="js/api/api-calls.js">
+	</script> 
+	<script src="js/api/btn-handlers.js">
+	</script> 
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5Z0cv8WusTKxKHZ0Dfgs-By5K_22FvsI">
+	</script> 
+	<script src="js/libraries/d3.v3.js" type="text/javascript">
+	</script> 
+	<script src="js/libraries/d3.v3.min.js">
+	</script> 
+	<script src="js/api/currentLocation.js">
+	</script>
+</body>
+</html>
